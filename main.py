@@ -10,23 +10,10 @@ class EchoBot(fp.PoeBot):
         last_message = request.query[-1].content
         yield fp.PartialResponse(text=last_message)
 
-app = FastAPI()
-bot = EchoBot()
-
-# 创建 Poe bot 应用并挂载到 FastAPI
-poe_app = fp.make_app(
-    bot, 
-    access_key='y9HC3Tp1McPH8yMoT4WY93W7KpQkqmlv', 
-    bot_name='EchoBotGVRJM7UIV0'
-)
-app.mount("/", poe_app)
-
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(
-        app, 
-        host="0.0.0.0", 
-        port=8002,
-        ssl_keyfile="certificate/guixuu.com.key",  # 私钥文件路径
-        ssl_certfile="certificate/guixuu.com.crt",  # 证书文件路径
+    import sys
+    sys.argv.extend(["-p", "8002"])
+    fp.run(
+        EchoBot(),
+        access_key='y9HC3Tp1McPH8yMoT4WY93W7KpQkqmlv'
     )
