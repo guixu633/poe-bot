@@ -23,4 +23,10 @@ app.mount("/", poe_app)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8002)
+    uvicorn.run(
+        app, 
+        host="0.0.0.0", 
+        port=8002,
+        ssl_keyfile="certificate/guixuu.com.key",  # 私钥文件路径
+        ssl_certfile="certificate/guixuu.com.crt",  # 证书文件路径
+    )
