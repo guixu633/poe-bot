@@ -1,19 +1,11 @@
-from __future__ import annotations
-from typing import AsyncIterable
-import fastapi_poe as fp
 from fastapi import FastAPI
+import uvicorn
+from chat import router as chat_router
 
-class EchoBot(fp.PoeBot):
-    async def get_response(
-        self, request: fp.QueryRequest
-    ) -> AsyncIterable[fp.PartialResponse]:
-        last_message = request.query[-1].content
-        yield fp.PartialResponse(text=last_message)
+app = FastAPI()
+
+# 注册路由
+app.include_router(chat_router)
 
 if __name__ == "__main__":
-    import sys
-    sys.argv.extend(["-p", "8002"])
-    fp.run(
-        EchoBot(),
-        access_key='y9HC3Tp1McPH8yMoT4WY93W7KpQkqmlv'
-    )
+    uvicorn.run(app, host="0.0.0.0", port=8002)
